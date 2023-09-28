@@ -1,0 +1,11 @@
+### Linear Regression: 
+- Batch Gradient Descent: minimising loss function by passing entire training data set at each step/iteration. Can be time consuming if training set is large. 
+- Stochastic Gradient Descent: minimising loss function by passing a single data point at each each step. Can lead to more volatile steps as gradient is less smooth/regular but this can help escape local minima. 
+- Mini-Batch Gradient Descent: minimising loss function by passing random batches of data at each step. Can escape local minima as well as having smoother steps. 
+- Should perform standardisation/normalisation if using gradient descent. This is because imagine a surface where one axis is large than the other, the steps taken in gradient descent will take longer to converge. 
+- In any form of regularisation you should also apply a standardisation/normalisation. Think of a feature with a small range, might have a huge coefficient which is more problematic in regularisation. 
+- Ridge Regression: Same as Linear Regression but has a form of regularisation by penalising the L2 norm of the parameters. 
+- Lasso Regression: Same as Linear regression but has a form of regularisation by penalising the L1 Norm of the parameters. Lasso has a form of feature selection as small parameters are penalised more largely compared to L2 norm. Eg consider: (0.01)^2  vs 0.01 - first term being the L2 norm, second term being the L1 norm. 
+- When using gradient descent should use a LearningRate Scheduler. This will start the learning rate at a higher value causing bigger steps to be taken (that way escaping local minima) but eventually takes smaller steps so that we can converge to the minima instead of bouncing around the local minima. 
+- Elastic Net Rgeression: Same as linear regression but has a L1 norm in error and a L2 norm in error of parameters. Weighted with (r) and (1-r) respectively. Can adjust the weight accordingly. 
+- Early Stopping Regularisation: Another form of regression but we run a gradient descent and pass the data in for a certain number of epochs. After each complete data pass we track the model that has the best error on the Cross Validation dataset. This model is the one that’s used in production as we believe it’s the model that’s not been overfit. 

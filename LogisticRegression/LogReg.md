@@ -1,0 +1,5 @@
+### Logistic Regression: 
+- Cost function has no closed form solution to the minimisation problem. However the cost function is convex like in Linear Regression so a optimiser like Gradient descent will indeed find the local minima. 
+- With classification models with multi classes, can either do a oneVsAll or oneVsOne approach. 
+- Logistic regression tries to fit a line between the 2 classes. Recall logistic regression uses the sigmoid function as an activation function. Which predicts 1 if theta • x >=0.5. This is essentially a plane in the feature space so can be thought of as using a line to split the classes. 
+- Softmax Regression involves setting theta to be a R^(n x k) matrix where k is number of classes. The j^th value in the output layer is made of the j^th row dotted with the input vector. We then use the softmax function to generate probabilities. 
