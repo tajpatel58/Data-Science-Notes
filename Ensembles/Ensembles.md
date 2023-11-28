@@ -23,3 +23,24 @@
 - However the Random forest, introduces some randomness that we’ve discussed, for each decision tree predictor, it samples sqrt(N) features and each node, instead of choosing the feature that gives the smallest Gini/impurity, it will randomly sample the feature. Again, doing some increases the bias, but lowers the overall variance. 
 - To go even further there’s a model called “Extremely randomised Ensemble” where each node in each decision tree has a random feature sampled from a subset like in an RF, but also a random threshold. This randomness means training can be super quick as no longer need to find the threshold that gives the purest subsets. 
 - Random Forests are also great because they can give an idea of feature importance. We can think of a the purity of a decision tree, as the sum of the Gini/Entropy of all nodes. Introducing a new feature to an existing leaf node, means that by splitting, we’re hoping for a decrease in Gini/impurity. A random forest can measure the importance of a feature by taking a weighted average of the decrease in Gini/impurity for all nodes that use that feature. 
+
+### Boosted Models:
+- Boosted Models refers to an ensembling technique, however the models are trained sequentially. 
+- Typically the idea of these boosted models, is the next model is trained to correct the predecessors mistakes. 
+- The 2 common boosted models are: AdaBoost and Gradient Boosted.
+
+#### AdaBoost:
+- AdaBoost will train models sequentially, the type of predictor in the ensemble can be LogReg, Decision trees, Support Vector Machines etc. However typically, they'd be the same type.
+- The first model is trained, then we go through a loop of the following until we've reached a specific amount of predictors/found the perfect predictor:
+    - The predictor is given an error rate, based on how many datapoints it incorrectly predicted. The error rate for the $j^{th}$ predictor:
+    $$\gamma_j = \sum^m_{i=1}w_i \hspace{0.5cm} \text{Where} \hspace{0.2cm} \hat{y_j(x_i)} \neq y_i $$ 
+    - The predictor is then given a weight, which is inversely proportional to the error rate. ie; a predictor has a higher weight if it classifies better. $j^{th}$ Predictor Weight:
+    $$\beta_j = log(\frac{1-\gamma_j}{\gamma_j}), \beta_j \in R $$
+    - The weights are updated ONLY for the mislabelled datapoints(then normalized), and passed into the loss function of the next model. (Note: can use Cross Entropy Loss for any classifier).
+    $$w_i = w_i * exp(\beta_j)$$
+    $$C.E = \sum^m_{i=1}w_ilog(p_i), \hspace{0.2cm} p_i = \text{Probability of $x_i$ being in the correct class}$$
+- Notice that each model is still given the full dataset, just weights of datapoints are redistributed. 
+- To predict the value for a datapoint: 
+    - The datapoint is passed to each predictor to predict a class. 
+    - For each class, we sum over the weights of the predictors that predicted that class.
+    - Whichever class has the highest sum, is the predicted class of the ensemble. 
