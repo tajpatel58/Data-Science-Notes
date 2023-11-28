@@ -27,3 +27,4 @@
   * Min Samples Leaf: Minimum number of samples a leaf node needs to be created. 
 * Decision Trees can also be pruned, cutting branches if they don’t statistically improve the purity of the model. 
 * Decision trees can have a high variance. This is because for example the feature selection at each node is random and the class on the false node is also random etc. Given these random components even using the same data can lead to a different looking decision tree. As variance is a measure of “how quickly does my model change, if the input data changes. 
+* Decision trees can also be regressors, similar to how a decision tree as a classifier is trained, each leaf node will have a subset of the training dataset. In the regressor case, we take the average of the samples belonging to that leaf node. 
