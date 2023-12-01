@@ -44,3 +44,31 @@
     - The datapoint is passed to each predictor to predict a class. 
     - For each class, we sum over the weights of the predictors that predicted that class.
     - Whichever class has the highest sum, is the predicted class of the ensemble. 
+- If our AdaBoost model is overfit, we can reduce number of models or regularize the base estimators.
+
+#### Gradient Boosting:
+- Gradient boosting is similar to Ada boost, in the sense that it's an ensemble method that is trained sequentially. 
+- The difference here is that each model is trained on the residuals/errors of the previous model. 
+- For example: suppose we're running a regression model and for a datapoint with label 221, we predict 200. We can train the next model/predictor to predict (221-200)=21, then we can consider the ensemble prediction as $h_1(x) + h_2(x)$. 
+- We do this sequentially, for a certain number of models or till we get a perfect model. 
+- Formally, if our ensemble has $k$ models, the prediction is $$ \sum^{k}_{j=1}h_j(x)$$
+- GBRT = Gradient Boosted Regression Trees, is a gradient boosted series of decision tree regressors. 
+- Can also use gradient boosted methods for classifiction, but do some further studying to understand how. 
+
+#### Histogram Based Gradient Boosting:
+- Histogram based gradient boosted works by binning all the input features of each predictor, then applies gradient boosting. 
+- A maximum of 255 bins is available per featurem and can be configured with the "max_bins" parameter. 
+- HGBs are much faster to train as there are less possible value of each feature as they are binned, so we go from continous to discrete. 
+- HGB's also have 2 great features: 
+    - They can support categorical features very easily.
+    - They can handle missing values
+- Python implementations include: XGBoost, LightGBM, CatBoost. 
+- They perform much quicker training, compared to other sequentially trained models, but as each feature is binned, there is some precision loss. 
+
+
+#### Stacking/Stacked Generalisation: 
+- Consider the following, say you had an ensemble of $n$ predictors, we can use the "Mode" to determine which class we predict, but why not build a classifier to decide how to aggregate these outpus? At the end of the day, the "mode" is simply an aggregation. 
+- To this end, we train each predictor, then we build a new model called a "blender", with training data as the output of each predictor. Thus if our ensemble has 15 models, the blender will have 15 input features. 
+- Once we train the blender, the base predictors are retrained on the full training set. 
+- We could even build another ensemble to aggregate the predictions of base predictors. 
+- Sklearn has a StackingClassifier that we can use for stacking.
